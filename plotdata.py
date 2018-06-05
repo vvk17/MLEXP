@@ -17,6 +17,7 @@ import os
 import time
 from datetime import timedelta, date
 from dotenv import load_dotenv
+import sys
 
 import dataset
 
@@ -47,8 +48,11 @@ def Device_data_per_day(inputDeviceId, inputDate):
     """
     Retrieve data for a day for a device per user input
     """
+    print("enter dev_data_per_day", file=sys.stderr)
     #update database name with the dataname
     databaseName = dataset.Get_database() + inputDate
+
+    print(databaseName, file=sys.stderr)
 
     #connect to Cloudant database and retrieve data for the database
     cloudantClient.connect()
@@ -56,31 +60,42 @@ def Device_data_per_day(inputDeviceId, inputDate):
     params = {'include_docs': 'true'}
     response = cloudantClient.r_session.get(endPoint, params=params)
     data = response.json()
+    print(data, file=sys.stderr)
 
     #initalize dataArray
     dataArray = []
 
     #get length of rows
     rowsLength = len(data["rows"])
+    print("\n rowslength : "+str(rowsLength), file=sys.stderr)
 
     #loop through data
     for x in range(0, rowsLength):
+        print("\n row : "+str(x),file=sys.stderr)
 
         #if device id exists
         if("deviceId" in data["rows"][x]["doc"]):
             deviceID = data["rows"][x]["doc"]["deviceId"]
+            print("\n devID : "+str(deviceID), file=sys.stderr)
 
             #if deivceId matches user provided device ID, append data to dataArray
             if deviceID == inputDeviceId:
                 timeStamp = data["rows"][x]["doc"]["timestamp"]
-                activeClients = data["rows"][x]["doc"]["data"]["activeClients"]
-                deviceCount = data["rows"][x]["doc"]["data"]["deviceCount"]
-                connections = data["rows"][x]["doc"]["data"]["connections"]
+                print("\n tS : "+str(timeStamp), file=sys.stderr)
+                #activeClients = data["rows"][x]["doc"]["data"]["activeClients"]
+                activeClients = 4
+                print("\n activeClients : "+str(activeClients), file=sys.stderr)
+                #deviceCount = data["rows"][x]["doc"]["data"]["deviceCount"]
+                deviceCount = 2
+                print("\n devCount : "+str(deviceCount), file=sys.stderr)
+                #connections = data["rows"][x]["doc"]["data"]["connections"]
+                connections = rowsLength
                 jsonData = {"deviceID": deviceID, "timeStamp": timeStamp, "activeClients": activeClients, "deviceCount": deviceCount , "connections": connections}
                 dataArray.append(jsonData)
 
     #disconnect from cloudant db
     cloudantClient.disconnect()
+    print(dataArray, file=sys.stderr)
 
     #return dataArray
     return dataArray

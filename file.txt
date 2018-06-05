@@ -1,0 +1,12 @@
+------------------------------------  -------------------------  ------------------------  --------------  ----------
+GUID                                  NAME                       CREATED                   FRAMEWORK       TYPE
+f41a5a5f-0f61-4754-874c-732484909203  mnist-hpo-training-def     2018-05-03T14:30:57.953Z  tensorflow      definition
+0081aaac-bcff-4b07-a466-3ae87c0eaa09  mnist-nnm-training-def-01  2018-05-28T08:35:21.803Z  tensorflow      definition
+14adb0ab-8f6a-44a2-98da-46849cc8c888  mnist-nnm-training-def     2018-05-02T17:02:03.220Z  tensorflow      definition
+1e8ff301-6d2a-446b-86f6-1277e67f3943  mnist-hpo-experiment       2018-05-03T14:31:23.749Z  -               experiment
+2567c06c-32ae-43ad-a16b-e9a2f1ee1e12  mnist-nnm-experiment-01    2018-05-28T08:40:09.847Z  -               experiment
+4d5d561d-7fb5-4df5-acf1-ef7f25c830f5  mnist-nnm-experiment       2018-05-02T17:06:45.160Z  -               experiment
+728c62e5-5a54-41d0-aaf2-cba13d82617c  MyTestModel                2018-05-03T14:14:21.897Z  tensorflow-1.5  model
+b068cd10-c0da-494d-b8d2-0808011e1ecb  mnist-hpo-model-03         2018-05-28T08:55:05.463Z  tensorflow-1.5  model
+e38b34cf-4f27-4454-9e77-be3dbc4f6ba3  mnist-hpo-saved-model      2018-05-03T14:42:18.544Z  tensorflow-1.5  model
+------------------------------------  -------------------------  ------------------------  --------------  ----------

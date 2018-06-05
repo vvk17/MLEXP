@@ -12,11 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from flask import Flask, jsonify, render_template, json, Response, request
+#from __future__ import print_function
+from watson_machine_learning_client import WatsonMachineLearningAPIClient
+
+from flask import Flask, jsonify, render_template, json, Response, request, Markup, flash
 import os
 import dataset
 import plotdata
+import sys
+from vvk17Utilities import JSONtoHTML
 
+wml_credentials = {
+        "url": "https://ibm-watson-ml.mybluemix.net",
+        "username": "a3e27bf9-2b60-4844-88ec-dfff829edba5",
+        "password": "25fe23d8-6a13-4523-8fe5-10dea01d97e0",
+        "instance_id": "630e57b3-5e9f-4721-8251-1035c8b69563"
+    }
+
+wmc = WatsonMachineLearningAPIClient(wml_credentials)
 
 #create flask application
 app = Flask(__name__)
@@ -26,16 +39,78 @@ def Run():
     """
     Load the site page
     """
+    print('run the app - stdout', file=sys.stdout)
+
     return render_template('index.html')
 
 
-@app.route('/deviceperday')
-def Device_data_per_day():
+@app.route('/clientDescription')
+def clientDescription():
     """
-    Load devicePerDay page
+    Load clientDescription page
     """
-    return render_template('devicePerDay.html')
+    i_d = wmc.service_instance.get_details()
+    p_d = json.dumps(i_d, indent=4) + "  "
+    msg = Markup(JSONtoHTML(p_d))
+    return render_template('clientDescription.html', data = msg)
 
+
+@app.route('/clientDetails')
+def clientDetails():
+    """
+    Load clientDetails page
+    """
+    i_d = wmc.repository.get_details()
+    p_d = json.dumps(i_d, indent=4) + "  "
+    msg = Markup(JSONtoHTML(p_d))
+    return render_template('clientDetails.html', data=msg)
+
+@app.route('/repositoryDefinitions')
+def repositoryDefinitions():
+    """
+    Load repositoryDefinitions page
+    """
+    i_d = wmc.repository.get_definition_details()
+    p_d = json.dumps(i_d, indent=4) + "  "
+    msg = Markup(JSONtoHTML(p_d))
+    return render_template('repositoryDefinitions.html', data=msg)
+
+@app.route('/repositoryExperiments')
+def repositoryExperiments():
+    """
+    Load repositoryExperiments page
+    """
+    i_d = wmc.repository.get_experiment_details()
+    p_d = json.dumps(i_d, indent=4) + "  "
+    msg = Markup(JSONtoHTML(p_d))
+    return render_template('repositoryExperiments.html', data=msg)
+
+@app.route('/repositoryModels')
+def repositoryModels():
+    """
+    Load repositoryModels page
+    """
+    i_d = wmc.repository.get_model_details()
+    p_d = json.dumps(i_d, indent=4) + "  "
+    msg = Markup(JSONtoHTML(p_d))
+    return render_template('repositoryModels.html', data=msg)
+
+
+@app.route('/listAll')
+def listAll():
+    """
+    Load listAll page
+    """
+    old_stdout = sys.stdout
+    sys.stdout = open('file.txt', 'w')
+    i_d = wmc.repository.list()
+    sys.stdout.close()
+    sys.stdout = old_stdout
+    fl = open('file.txt','r')
+    i_d = fl.read()
+    fl.close()
+    msg = Markup(i_d)
+    return render_template('listAll.html', data=msg)
 
 @app.route('/deviceacrossdays')
 def Device_data_across_days():
@@ -86,21 +161,21 @@ def Retrieve_per_day():
     jsonFile = ''
     if request.method == 'POST':
         jsonFile = request.json
-        print ("post request")
+        print ("post request", file=sys.stderr)
 
     #if jsonFile successfully posted..
     if jsonFile != '':
         # check all required arguments are present:
         if not all(arg in jsonFile for arg in ["deviceId","date"]):
-            print("Missing arguments in post request")
+            print("Missing arguments in post request", file=sys.stderr)
             return json.dumps({"status":"Error", "messages":"Missing arguments"}), 422
         inputDeviceId = jsonFile["deviceId"]
         inputDate = jsonFile["date"]
-        print("retreived data: " + str(inputDeviceId) + " | " + str(inputDate) )
+        print("retreived data: " + str(inputDeviceId) + " | " + str(inputDate), file=sys.stderr)
 
     #get data for device fields per day
     dataArray = plotdata.Device_data_per_day(inputDeviceId, inputDate)
-
+    print("after func call", file=sys.stderr)
     #create and return the output json
     output = {"dataArray": dataArray, "deviceId": inputDeviceId, "date" : inputDate}
     return json.dumps(output)

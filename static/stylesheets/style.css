@@ -46,41 +46,60 @@ a:hover {
 	max-width:200px;
 }
 
-.devicePerDay {
+.clientDescription {
 	 padding-bottom:  5px;
 }
 
-.devicePerDay a {
+.clientDescription a {
 	background-color: #246da7;
 	color: white;
 	padding: 14px 25px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	width: 300px;
+	width: 180px;
 }
 
-.devicePerDay a:hover {
+.clientDescription a:hover {
 	background-color: #3497e4;
 }
 
-.deviceAcrossDays {
+.clientDetails {
 	 padding-bottom:  5px;
 }
 
-.deviceAcrossDays a {
+.clientDetails a {
 	background-color: #246da7;
 	color: white;
 	padding: 14px 25px;
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
-	width: 300px;
+	width: 180px;
 }
 
-.deviceAcrossDays a:hover {
+.clientDetails a:hover {
 	background-color: #3497e4;
 }
+
+.listDetails {
+  padding-bottom: 5px;
+}
+
+.listDetails a {
+  background-color: #246da7;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  width: 180px;
+}
+
+.listDetails a:hover {
+  background-color: #3497e4;
+}
+
 
 h1 {
 	font-weight: bold;
@@ -169,7 +188,7 @@ select {
 
 .header {
 	background-color: #13157573;
-	padding-left: 15px;
+	padding-left: 25px;
 }
 
 .dataset {

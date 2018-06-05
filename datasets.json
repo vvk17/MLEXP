@@ -1,1 +1,1 @@
-{"currentDataset": "", "datasets": []}
+{"datasets": [{"dates": ["2018-06-02"], "deviceIds": ["vvk17-rpi3g-01"], "databaseName": "iotp_pripd4_default_", "dataset": "rpi3g"}, {"databaseName": "iotp_pripd4_default_", "dataset": "rpi3-01", "dates": ["2018-06-02", "2018-06-03", "2018-06-04", "2018-06-05", "2018-06-06"], "deviceIds": ["vvk17-rpi3g-01", "vvk17-rpi3-02", "vvk17-rpi3g-02", "vvk17-rpi3-01"]}], "currentDataset": "rpi3g"}
